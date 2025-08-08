@@ -26,9 +26,9 @@ The first event is the point where the batter (or in very rare cases the pitcher
 ### Pitch Selection
 This leads us to our second event: pitch selection. This part of the formula requires three inputs: the pitcher's pitch selection filtered by batter handedness, the batter's probability to see certain pitches filtered by pitcher handedness, and the balls and strikes count. Pitchers will generally throw different pitches on different counts to different batters. Normally fastballs are thrown early in counts and breaking/offspeed pitches later. In 2024 Tarik Skubal threw his 4-Seam Fastball 40.3% of the time in an 0-0 count versus right-handed batters, but maybe he knows José Ramírez historically hits the fastball well in an 0-0 count (hypothetically). Using this knowledge he may opt to throw the changeup or some other offering in his repertoire. The pitch selection model takes in the percent of pitch types the batter sees in certain counts in order to correct for situations where pitchers understand that a pitch is more or less effective against certain batters. Thus, we simply model the probabilities as below:
 
-\[
+$$
 P(p) \propto P_p(p)^{\alpha} \times (1 - P_b(p))^{\beta}
-\]
+$$
 
 where:
 
@@ -39,9 +39,9 @@ where:
 
 After calculating the combined score for each pitch, normalize the probabilities so they sum to 1:
 
-\[
+$$
 P(p) = \frac{P_p(p)^{\alpha} \times (1 - P_b(p))^{\beta}}{\sum_{p} P_p(p)^{\alpha} \times (1 - P_b(p))^{\beta}}
-\]
+$$
 
 Please note that we are making an extreme oversimplification of a unique event. There are other factors at play in a real game that we cannot really account for without making this model extremely and unnecessarily complex. Thus, our second assumption of the model is that these are the only inputs required to predict the pitch selection on a given pitch. We are neglecting other factors like the inning, score differential, number of outs, runners on base, pitcher fatigue, weather, ballpark dimensions, defensive positioning, or any other of the seemingly endless factors that may influence the pitch selection. The idea here is to treat each at-bat as if it were in a vacuum.
 
