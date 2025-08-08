@@ -36,7 +36,51 @@ def test_read_pitchers_db(name, year_input):
 
     conn.close()
 
+def test_read_batters_db(name, year_input):
+    BASE_DIR = Path(__file__).resolve().parents[2]  # Adjust as needed
+    db_path = BASE_DIR / "data" / "batters.db"
+
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT first_name, last_name, year, player_id, hand, pitch_probability_vs_righty, pitch_probability_vs_lefty 
+        FROM batters
+    """)
+    rows = cursor.fetchall()
+
+    if not rows:
+        print("No data found in batters.db")
+        return
+
+    for row in rows:
+        first_name, last_name, year, player_id, hand, righty_json, lefty_json = row
+        full_name = f"{first_name} {last_name}"
+
+        if full_name != name or year != year_input:
+            continue
+
+        print(f"{full_name} ({year}) - Player ID: {player_id} - Hand: {hand}")
+
+        pitch_probability_vs_righty = json.loads(righty_json)
+        pitch_probability_vs_lefty = json.loads(lefty_json)
+
+        print(f"  Pitch Probability vs Righty:")
+        for balls, counts in pitch_probability_vs_righty.items():
+            for strikes, pitch_probs in counts.items():
+                print(f"    Count {balls}-{strikes}: {pitch_probs}")
+
+        print(f"  Pitch Probability vs Lefty:")
+        for balls, counts in pitch_probability_vs_lefty.items():
+            for strikes, pitch_probs in counts.items():
+                print(f"    Count {balls}-{strikes}: {pitch_probs}")
+
+        print("-" * 80)
+
+    conn.close()
+
 if __name__ == "__main__":
-    pitcher = "Shohei Ohtani"
-    year = "2021"
-    test_read_pitchers_db(pitcher, year)
+    player = "Will Vest"
+    year = "2024"
+    test_read_pitchers_db(player, year)
+    #test_read_batters_db(player, year)

@@ -14,11 +14,13 @@ def main():
     if args.role == 'pitcher':
         pitcher = Pitcher(args.first_name, args.last_name, args.year)
         pitcher = pitcher_lookup(pitcher)
-        save_pitcher(pitcher)
+        if pitcher:
+            save_pitcher(pitcher)
     elif args.role == 'batter':
         batter = Batter(args.first_name, args.last_name, args.year)
         batter = batter_lookup(batter)
-        save_batter(batter)
+        if batter:
+            save_batter(batter)
     else:
         print(f"Invalid role: '{args.role}'. Expected 'pitcher' or 'batter'.")
         parser.print_help()

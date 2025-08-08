@@ -17,6 +17,7 @@ def save_pitcher(pitcher):
             last_name TEXT,
             year TEXT,
             player_id INTEGER,
+            hand TEXT,
             pitch_mix TEXT,
             usage_vs_righty TEXT,
             usage_vs_lefty TEXT,
@@ -29,9 +30,18 @@ def save_pitcher(pitcher):
     usage_vs_lefty_json = json.dumps(pitcher.usage_vs_lefty)
 
     cursor.execute('''
-        INSERT OR REPLACE INTO pitchers (first_name, last_name, year, player_id, pitch_mix, usage_vs_righty, usage_vs_lefty)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (pitcher.first_name, pitcher.last_name, pitcher.year, pitcher.player_id, pitch_mix_json, usage_vs_righty_json, usage_vs_lefty_json))
+        INSERT OR REPLACE INTO pitchers (first_name, last_name, year, player_id, hand, pitch_mix, usage_vs_righty, usage_vs_lefty)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        pitcher.first_name,
+        pitcher.last_name,
+        pitcher.year,
+        pitcher.player_id,
+        pitcher.hand,
+        pitch_mix_json,
+        usage_vs_righty_json,
+        usage_vs_lefty_json
+        ))
 
     conn.commit()
     conn.close()
@@ -47,14 +57,29 @@ def save_batter(batter):
             last_name TEXT,
             year TEXT,
             player_id INTEGER,
+            hand TEXT,
+            pitch_probability_vs_righty TEXT,
+            pitch_probability_vs_lefty TEXT,
             PRIMARY KEY (first_name, last_name, year)
         )
     ''')
 
+    pitch_probability_vs_righty_json = json.dumps(batter.pitch_probability_vs_righty)
+    pitch_probability_vs_lefty_json = json.dumps(batter.pitch_probability_vs_lefty)
+
     cursor.execute('''
-        INSERT OR REPLACE INTO batters (first_name, last_name, year, player_id)
-        VALUES (?, ?, ?, ?)
-    ''', (batter.first_name, batter.last_name, batter.year, batter.player_id))
+        INSERT OR REPLACE INTO batters 
+        (first_name, last_name, year, player_id, hand, pitch_probability_vs_righty, pitch_probability_vs_lefty)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        batter.first_name,
+        batter.last_name,
+        batter.year,
+        batter.player_id,
+        batter.hand,
+        pitch_probability_vs_righty_json,
+        pitch_probability_vs_lefty_json
+    ))
 
     conn.commit()
     conn.close()
