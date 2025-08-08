@@ -18,18 +18,20 @@ def save_pitcher(pitcher):
             year TEXT,
             player_id INTEGER,
             pitch_mix TEXT,
-            count_usage TEXT,
+            usage_vs_righty TEXT,
+            usage_vs_lefty TEXT,
             PRIMARY KEY (first_name, last_name, year)
         )
     ''')
 
     pitch_mix_json = json.dumps(pitcher.pitch_mix)
-    count_usage_json = json.dumps(pitcher.count_usage)
+    usage_vs_righty_json = json.dumps(pitcher.usage_vs_righty)
+    usage_vs_lefty_json = json.dumps(pitcher.usage_vs_lefty)
 
     cursor.execute('''
-        INSERT OR REPLACE INTO pitchers (first_name, last_name, year, player_id, pitch_mix, count_usage)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ''', (pitcher.first_name, pitcher.last_name, pitcher.year, pitcher.player_id, pitch_mix_json, count_usage_json))
+        INSERT OR REPLACE INTO pitchers (first_name, last_name, year, player_id, pitch_mix, usage_vs_righty, usage_vs_lefty)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (pitcher.first_name, pitcher.last_name, pitcher.year, pitcher.player_id, pitch_mix_json, usage_vs_righty_json, usage_vs_lefty_json))
 
     conn.commit()
     conn.close()

@@ -10,7 +10,8 @@ class Pitcher:
         self.full_name = self.first_name + ' ' + self.last_name
 
         self.pitch_mix = []
-        self.count_usage = defaultdict(lambda: defaultdict(dict))
+        self.usage_vs_righty = defaultdict(lambda: defaultdict(dict))
+        self.usage_vs_lefty = defaultdict(lambda: defaultdict(dict))
 
         self.player_id = None
         self.team = ''
@@ -26,15 +27,30 @@ class Pitcher:
     def show_pitch_mix(self):
         print(f"Pitch mix for {self.full_name} [{self.player_id}]: {self.pitch_mix}")
 
-    def show_total_count_usage(self):
-        print(f"{self.full_name} [{self.player_id}] Pitch Mix By Count:")
+    def show_total_count_usage(self, hand):
+        if hand == 'Right':
+            usage = self.usage_vs_righty
+        elif hand == 'Left':
+            usage = self.usage_vs_lefty
+        else:
+            print("Invalid hand specified. Use 'right' or 'left'.")
+            return
+
+        print(f"{self.full_name} [{self.player_id}] Pitch Mix By Count Against {hand}y:")
         for balls in range(4):
             for strikes in range(3):
-                print(f"   {balls}-{strikes} count usage: {self.count_usage[balls][strikes]}")
+                print(f"   {balls}-{strikes} count usage: {usage[balls][strikes]}")
     
-    def show_count_usage(self, balls, strikes):
-        print(f"{self.full_name} [{self.player_id}] Pitch Mix For {balls}-{strikes} Count:")
-        print(f"   {balls}-{strikes} count usage: {self.count_usage[balls][strikes]}")
+    def show_count_usage(self, balls, strikes, hand):
+        if hand == 'Right':
+            usage = self.usage_vs_righty
+        elif hand == 'Left':
+            usage = self.usage_vs_lefty
+        else:
+            print("Invalid hand specified. Use 'Right' or 'Left'.")
+            return
+        print(f"{self.full_name} [{self.player_id}] Pitch Mix For {balls}-{strikes} Count Against {hand}y:")
+        print(f"   {balls}-{strikes} count usage: {usage[balls][strikes]}")
 
 class Batter:
     def __init__(self, first_name, last_name, year):
@@ -60,15 +76,19 @@ def pitcher_lookup(pitcher):
         end_date = f"{pitcher.year}-09-30"
         data = statcast_pitcher(start_dt=start_date, end_dt=end_date, player_id=pitcher.player_id)
 
+        # Filter by batter handedness
+        data_against_righty = data[data['stand'] == 'R']
+        data_against_lefty = data[data['stand'] == 'L']
+
         # Build pitch mix
         pitch_types = data['pitch_type'].value_counts()
         for pitch_type, count in pitch_types.items():
             pitcher.add_pitch(pitch_type)
         
-        # Filter usage by count
+        # Filter usage by count, top for righty, bottom for lefty
         for balls in range(4):
             for strikes in range(3):
-                subset = data[(data['balls'] == balls) & (data['strikes'] == strikes)]
+                subset = data_against_righty[(data_against_righty['balls'] == balls) & (data_against_righty['strikes'] == strikes)]
                 if subset.empty:
                     continue
 
@@ -76,8 +96,21 @@ def pitcher_lookup(pitcher):
                 total = pitch_counts.sum()
 
                 if total > 0:
-                    pitch_percents = (pitch_counts / total).round(4).to_dict()
-                    pitcher.count_usage[balls][strikes] = pitch_percents
+                    pitch_percents = (pitch_counts / total).round(3).to_dict()
+                    pitcher.usage_vs_righty[balls][strikes] = pitch_percents
+
+        for balls in range(4):
+            for strikes in range(3):
+                subset = data_against_lefty[(data_against_lefty['balls'] == balls) & (data_against_lefty['strikes'] == strikes)]
+                if subset.empty:
+                    continue
+
+                pitch_counts = subset['pitch_type'].value_counts()
+                total = pitch_counts.sum()
+
+                if total > 0:
+                    pitch_percents = (pitch_counts / total).round(3).to_dict()
+                    pitcher.usage_vs_lefty[balls][strikes] = pitch_percents
 
         # Parse other important data
 

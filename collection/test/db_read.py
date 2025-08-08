@@ -2,7 +2,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-def test_read_pitchers_db():
+def test_read_pitchers_db(name, year_input):
     # Set path relative to this script: ../../data/pitchers.db
     BASE_DIR = Path(__file__).resolve().parents[2]  # Adjust depending on where this file lives
     db_path = BASE_DIR / "data" / "pitchers.db"
@@ -10,7 +10,7 @@ def test_read_pitchers_db():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT first_name, last_name, year, player_id, pitch_mix, count_usage FROM pitchers")
+    cursor.execute("SELECT first_name, last_name, year, player_id, pitch_mix, usage_vs_righty, usage_vs_lefty FROM pitchers")
     rows = cursor.fetchall()
 
     if not rows:
@@ -18,17 +18,25 @@ def test_read_pitchers_db():
         return
 
     for row in rows:
-        first_name, last_name, year, player_id, pitch_mix_json, count_usage_json = row
+
+        first_name, last_name, year, player_id, pitch_mix_json, usage_vs_righty_json, usage_vs_lefty_json = row
         print(f"{first_name} {last_name} ({year}) - Player ID: {player_id}")
+
+        if f"{first_name} {last_name}" != name or year != year_input:
+            continue
         
         pitch_mix = json.loads(pitch_mix_json)
-        count_usage = json.loads(count_usage_json)
+        usage_vs_righty = json.loads(usage_vs_righty_json)
+        usage_vs_lefty = json.loads(usage_vs_lefty_json)
 
         print(f"  Pitch Mix: {pitch_mix}")
-        print(f"  Count Usage: {count_usage}")
-        print("-" * 40)
+        print(f"  Count Usage vs. Righty: {usage_vs_righty}")
+        print(f"  Count Usage vs. Lefty: {usage_vs_lefty}")
+        print("-" * 80)
 
     conn.close()
 
 if __name__ == "__main__":
-    test_read_pitchers_db()
+    pitcher = "Shohei Ohtani"
+    year = "2021"
+    test_read_pitchers_db(pitcher, year)
