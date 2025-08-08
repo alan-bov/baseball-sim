@@ -14,9 +14,6 @@ class Pitcher:
         self.pitch_mix = []
         self.usage_vs_righty = defaultdict(lambda: defaultdict(dict))
         self.usage_vs_lefty = defaultdict(lambda: defaultdict(dict))
-        self.ops_against_pp_righty = defaultdict(lambda: defaultdict(dict))
-        self.ops_against_pp_lefty = defaultdict(lambda: defaultdict(dict))
-        self.ops_per_count = defaultdict(lambda: defaultdict(dict))
 
         # Miscellaneous
         self.player_id = None
@@ -107,12 +104,16 @@ def pitcher_lookup(pitcher):
     try:
         # Get player ID from pybaseball
         player_info = playerid_lookup(pitcher.last_name, pitcher.first_name)
+        if player_info.empty:
+            print("ERROR - Pitcher not found.")
+            return None
         pitcher.define_id(int(player_info['key_mlbam'].iloc[0]))
 
-        # Pull data from specified year and get handedness
+        # Pull data from specified year, filter for regular season, and get handedness
         start_date = f"{pitcher.year}-03-01"
         end_date = f"{pitcher.year}-09-30"
         data = statcast_pitcher(start_dt=start_date, end_dt=end_date, player_id=pitcher.player_id)
+        data = data[data['game_type'] == 'R']
 
         hand_map = {"R": "Right", "L": "Left", "S": "Switch"}
         if not data.empty:
@@ -168,12 +169,17 @@ def batter_lookup(batter):
     try:
         # Get player ID from pybaseball
         player_info = playerid_lookup(batter.last_name, batter.first_name)
+        if player_info.empty:
+            print("ERROR - Batter not found.")
+            return None
+        
         batter.define_id(int(player_info['key_mlbam'].iloc[0]))
 
-        # Pull data from specified year and get handedness
+        # Pull data from specified year, filter for regular season, and get handedness
         start_date = f"{batter.year}-03-01"
         end_date = f"{batter.year}-09-30"
         data = statcast_batter(start_dt=start_date, end_dt=end_date, player_id=batter.player_id)
+        data = data[data['game_type'] == 'R']
 
         hand_map = {"R": "Right", "L": "Left", "S": "Switch"}
         if not data.empty:

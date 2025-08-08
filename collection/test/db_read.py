@@ -80,7 +80,7 @@ def test_read_batters_db(name, year_input):
     conn.close()
 
 if __name__ == "__main__":
-    player = "Will Vest"
+    player = "Riley Greene"
     year = "2024"
-    test_read_pitchers_db(player, year)
-    #test_read_batters_db(player, year)
+    #test_read_pitchers_db(player, year)
+    test_read_batters_db(player, year)

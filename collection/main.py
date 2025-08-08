@@ -4,8 +4,8 @@ from helpers.data_collectors import Pitcher, Batter, pitcher_lookup, batter_look
 
 def main():
     parser = argparse.ArgumentParser(description='Get pitcher info')
-    parser.add_argument('first_name', type=str, help='First name of the pitcher')
-    parser.add_argument('last_name', type=str, help='Last name of the pitcher')
+    parser.add_argument('first_name', type=str, help='First name of the player')
+    parser.add_argument('last_name', type=str, help='Last name of the player')
     parser.add_argument('year', type=str, help='Year for the season we are gathering')
     parser.add_argument('role', type=str, help='pitcher or batter')
 
