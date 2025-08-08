@@ -3,19 +3,19 @@ The goal of this project is to predict the outcome of MLB at-bats using Statcast
 
 ## Inputs
 A Python script will be used to make a database of relevant inputs for both pitchers and hitters. The following are the inputs gathered:
-1. 
-2. 
-3. 
-4. 
-5. 
+1. I1
+2. I2
+3. I3
+4. I4
+5. I5
 
 ## Outputs
 Below is a list of the possible outputs from the model using the inputs outlined above. Each output will be weighted with a probability and we use a random number generator to select the output for each pitch. This work will be done in a simulation program written in Rust.
-1. 
-2. 
-3. 
-4. 
-5. 
+1. O1
+2. O2
+3. O3
+4. O4
+5. O5
 
 ## Model Description
 An at-bat in a vacuum consists of a series of events. Here is the list of events that this model uses in order to simulate an at-bat.
@@ -32,10 +32,10 @@ $$
 
 where:
 
-- \(P(p)\) is the combined probability of the pitcher throwing pitch \(p\).
-- \(P_p(p)\) is the pitcher’s historical probability of throwing pitch \(p\) in the current count and matchup.
-- \(P_b(p)\) is the batter’s historical probability of seeing pitch \(p\) in the current count and matchup.
-- \(\alpha\) and \(\beta\) are tuning parameters that control the influence of the pitcher’s preference and the batter’s expectations, respectively.
+- $P(p)$ is the combined probability of the pitcher throwing pitch $p$.
+- $P_p(p)$ is the pitcher’s historical probability of throwing pitch $p$ in the current count and matchup.
+- $P_b(p)$ is the batter’s historical probability of seeing pitch $p$ in the current count and matchup.
+- $\alpha$ and $\beta$ are tuning parameters that control the influence of the pitcher’s preference and the batter’s expectations, respectively.
 
 After calculating the combined score for each pitch, normalize the probabilities so they sum to 1:
 
