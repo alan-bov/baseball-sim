@@ -16,6 +16,11 @@ class Pitcher {
         Pitcher(std::string fn, std::string ln, std::string y);
         void set_id(int id);
         void set_hand(std::string h);
+        const std::string& get_first_name() const;
+        const std::string& get_last_name() const;
+        const std::string& get_year() const;
+        const int& get_id() const;
+        const std::string& get_hand() const;
 };
 
 class Batter {
@@ -30,10 +35,15 @@ class Batter {
         Batter(std::string fn, std::string ln, std::string y);
         void set_id(int id);
         void set_hand(std::string h);
+        const std::string& get_first_name() const;
+        const std::string& get_last_name() const;
+        const std::string& get_year() const;
+        const int& get_id() const;
+        const std::string& get_hand() const;
 };
 
-Pitcher read_pitcher_db(Pitcher pitcher);
-Batter read_batter_db(Batter batter);
+bool read_pitcher_db(Pitcher pitcher);
+bool read_batter_db(Batter batter);
 
 bool get_pitcher(std::string first_name, std::string last_name, std::string year);
 bool get_batter(std::string first_name, std::string last_name, std::string year);

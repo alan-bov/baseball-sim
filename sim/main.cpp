@@ -5,12 +5,14 @@
 #include "scripts/pitch_select.h"
 
 int main() {
-    bool p_success = get_pitcher("Tarik", "Skubal", "2024");
-    bool b_success = get_batter("Jose", "Ramirez", "2024");
-    if (p_success && b_success) {
-        std::cout << "New player(s) successfully added to database." << std::endl;
-    } else {
-        std::cout << "Failed to enter new player into database." << std::endl;
+    Pitcher pitcher("Will", "Vest", "2024");
+    bool found = read_pitcher_db(pitcher);
+    if (!found) {
+        std::cout << "Pitcher not found, adding to database..." << std::endl;
+        get_pitcher(pitcher.get_first_name(), pitcher.get_last_name(), pitcher.get_year());  // You implement this function to insert pitcher
+    }
+    else {
+        std::cout << "Pitcher found: ID = " << pitcher.get_id() << ", Hand = " << pitcher.get_hand() << std::endl;
     }
     return 0;
 }
