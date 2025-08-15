@@ -1,0 +1,10 @@
+^C:\USERS\ABOVEE\DOCUMENTS\PYTHON PROJECTS\BB MODEL\SIM\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/abovee/Documents/Python Projects/BB Model/sim" "-BC:/Users/abovee/Documents/Python Projects/BB Model/sim/build" --check-stamp-file "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

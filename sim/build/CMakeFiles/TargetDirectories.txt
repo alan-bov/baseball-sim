@@ -1,0 +1,3 @@
+C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/sim.dir
+C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/ZERO_CHECK.dir

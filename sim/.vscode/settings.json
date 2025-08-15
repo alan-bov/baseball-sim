@@ -57,6 +57,20 @@
         "optional": "cpp",
         "ratio": "cpp",
         "sstream": "cpp",
-        "vector": "cpp"
-    }
+        "vector": "cpp",
+        "any": "cpp",
+        "array": "cpp",
+        "codecvt": "cpp",
+        "functional": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "numeric": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "unordered_map": "cpp",
+        "valarray": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }
