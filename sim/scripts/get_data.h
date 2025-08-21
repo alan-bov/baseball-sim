@@ -41,6 +41,8 @@ class Batter {
         std::string year;
         int player_id;
         std::string hand;
+        json pitches_seen_righty;
+        json pitches_seen_lefty;
 
     public:
         Batter(std::string fn, std::string ln, std::string y);
@@ -51,6 +53,10 @@ class Batter {
         const std::string& get_year() const;
         const int& get_id() const;
         const std::string& get_hand() const;
+        const json& get_pitches_seen_righty() const;
+        void set_pitches_seen_righty(const std::string& usage_str);
+        const json& get_pitches_seen_lefty() const;
+        void set_pitches_seen_lefty(const std::string& usage_str);
 };
 
 bool read_pitcher_db(Pitcher& pitcher);

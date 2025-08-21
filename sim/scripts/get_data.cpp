@@ -88,6 +88,16 @@ const std::string& Batter::get_hand() const {
     return hand;
 }
 
+const json& Batter::get_pitches_seen_righty() const { return pitches_seen_righty; }
+void Batter::set_pitches_seen_righty(const std::string& usage_str) {
+    pitches_seen_righty = json::parse(usage_str);
+}
+
+const json& Batter::get_pitches_seen_lefty() const { return pitches_seen_lefty; }
+void Batter::set_pitches_seen_lefty(const std::string& usage_str) {
+    pitches_seen_lefty = json::parse(usage_str);
+}
+
 // HELPER FUNCTIONS
 sqlite3* init_db(const fs::path& db_path) {
     sqlite3* db = nullptr;
@@ -219,13 +229,82 @@ bool read_pitcher_db(Pitcher& pitcher) {
 }
 
 bool read_batter_db(Batter& batter) {
-    try {
-        return true;
-    }
-    catch (...) {
-        std::cout << "Error reading from data/batters.db." << std::endl;
+    fs::path db_path = find_data_file("batters.db");
+    if (db_path.empty()) {
+        std::cerr << "Error: Could not find data/batters.db in current or up to 3 parent directories.\n";
         return false;
     }
+
+    sqlite3* db = init_db(db_path);
+    if (!db) {
+        std::cerr << "Failed to open DB inside read_batter_db." << std::endl;
+        return false;
+    }
+
+    const char* sql = R"(
+        SELECT player_id, hand, pitch_probability_vs_righty, pitch_probability_vs_lefty
+        FROM pitchers
+        WHERE first_name = ? COLLATE NOCASE
+          AND last_name = ? COLLATE NOCASE
+          AND year = ? COLLATE NOCASE
+    )";
+
+    sqlite3_stmt* stmt = nullptr;
+    int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return false;
+    }
+
+    sqlite3_bind_text(stmt, 1, batter.get_first_name().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, batter.get_last_name().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, batter.get_year().c_str(), -1, SQLITE_STATIC);
+
+    // Step through the query
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+        int player_id = sqlite3_column_int(stmt, 0);
+        const unsigned char* hand_text = sqlite3_column_text(stmt, 1);
+        const unsigned char* pitch_mix_text = sqlite3_column_text(stmt, 2);
+        const unsigned char* usage_vs_righty_text = sqlite3_column_text(stmt, 3);
+        const unsigned char* usage_vs_lefty_text = sqlite3_column_text(stmt, 4);
+
+        pitcher.set_id(player_id);
+        if (hand_text) pitcher.set_hand(reinterpret_cast<const char*>(hand_text));
+        if (pitch_mix_text) {
+            try { pitcher.set_pitch_mix(reinterpret_cast<const char*>(pitch_mix_text)); }
+            catch (const std::exception& e) {
+                std::cerr << "Error parsing pitch_mix JSON: " << e.what() << "\n";
+            }
+        }
+
+        if (usage_vs_righty_text) {
+            try { pitcher.set_usage_vs_righty(reinterpret_cast<const char*>(usage_vs_righty_text)); }
+            catch (const std::exception& e) {
+                std::cerr << "Error parsing usage_vs_righty JSON: " << e.what() << "\n";
+            }
+        }
+
+        if (usage_vs_lefty_text) {
+            try { pitcher.set_usage_vs_lefty(reinterpret_cast<const char*>(usage_vs_lefty_text)); }
+            catch (const std::exception& e) {
+                std::cerr << "Error parsing usage_vs_lefty JSON: " << e.what() << "\n";
+            }
+        }
+
+        sqlite3_finalize(stmt);
+        sqlite3_close(db);
+        return true;
+    } else if (rc == SQLITE_DONE) {
+        std::cout << "DEBUG: Query completed, no matching rows found.\n";
+    } else {
+        std::cerr << "SQLite step error: " << sqlite3_errmsg(db) << "\n";
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return false;
 }
 
 bool get_pitcher(std::string first_name, std::string last_name, std::string year) {
