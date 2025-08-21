@@ -243,7 +243,7 @@ bool read_batter_db(Batter& batter) {
 
     const char* sql = R"(
         SELECT player_id, hand, pitch_probability_vs_righty, pitch_probability_vs_lefty
-        FROM pitchers
+        FROM batters
         WHERE first_name = ? COLLATE NOCASE
           AND last_name = ? COLLATE NOCASE
           AND year = ? COLLATE NOCASE
@@ -266,30 +266,23 @@ bool read_batter_db(Batter& batter) {
     if (rc == SQLITE_ROW) {
         int player_id = sqlite3_column_int(stmt, 0);
         const unsigned char* hand_text = sqlite3_column_text(stmt, 1);
-        const unsigned char* pitch_mix_text = sqlite3_column_text(stmt, 2);
-        const unsigned char* usage_vs_righty_text = sqlite3_column_text(stmt, 3);
-        const unsigned char* usage_vs_lefty_text = sqlite3_column_text(stmt, 4);
+        const unsigned char* pitch_probability_vs_righty_text = sqlite3_column_text(stmt, 2);
+        const unsigned char* pitch_probability_vs_lefty_text = sqlite3_column_text(stmt, 3);
 
-        pitcher.set_id(player_id);
-        if (hand_text) pitcher.set_hand(reinterpret_cast<const char*>(hand_text));
-        if (pitch_mix_text) {
-            try { pitcher.set_pitch_mix(reinterpret_cast<const char*>(pitch_mix_text)); }
+        batter.set_id(player_id);
+        if (hand_text) batter.set_hand(reinterpret_cast<const char*>(hand_text));
+
+        if (pitch_probability_vs_righty_text) {
+            try { batter.set_pitches_seen_righty(reinterpret_cast<const char*>(pitch_probability_vs_lefty_text)); }
             catch (const std::exception& e) {
-                std::cerr << "Error parsing pitch_mix JSON: " << e.what() << "\n";
+                std::cerr << "Error parsing pitch_probability_vs_righty JSON: " << e.what() << "\n";
             }
         }
 
-        if (usage_vs_righty_text) {
-            try { pitcher.set_usage_vs_righty(reinterpret_cast<const char*>(usage_vs_righty_text)); }
+        if (pitch_probability_vs_lefty_text) {
+            try { batter.set_pitches_seen_lefty(reinterpret_cast<const char*>(pitch_probability_vs_lefty_text)); }
             catch (const std::exception& e) {
-                std::cerr << "Error parsing usage_vs_righty JSON: " << e.what() << "\n";
-            }
-        }
-
-        if (usage_vs_lefty_text) {
-            try { pitcher.set_usage_vs_lefty(reinterpret_cast<const char*>(usage_vs_lefty_text)); }
-            catch (const std::exception& e) {
-                std::cerr << "Error parsing usage_vs_lefty JSON: " << e.what() << "\n";
+                std::cerr << "Error parsing pitch_probability_usage_vs_lefty JSON: " << e.what() << "\n";
             }
         }
 
@@ -327,9 +320,9 @@ bool get_pitcher(std::string first_name, std::string last_name, std::string year
 
 bool get_batter(std::string first_name, std::string last_name, std::string year) {
     try {
-        std::string python_path = R"(..\\collection\\.venv\\Scripts\\python.exe)";
-        std::string script_path = R"(..\\collection\\main.py)";
-        std::string command = "cmd /c \"\"" + python_path + "\" \"" + script_path + "\" \"" + first_name + "\" \"" + last_name + "\" \"" + year + "\" batter\"";
+        fs::path python_path = find_collection_file(".venv\\Scripts\\python.exe");
+        fs::path script_path = find_collection_file("main.py");
+        std::string command = "cmd /c \"\"" + python_path.string() + "\" \"" + script_path.string() + "\" \"" + first_name + "\" \"" + last_name + "\" \"" + year + "\" batter\"";
         int ret = system(command.c_str());
 
         if (ret == 0) {
