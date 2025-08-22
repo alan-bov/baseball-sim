@@ -1,16 +1,13 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <random>
 #include <nlohmann/json.hpp>
 #include "pitch_select.h"
 
 using json = nlohmann::json;
 
-std::string get_arm_matchup() {
-    return "pass";
-}
-
-const json select_pitch(std::string balls, std::string strikes, const json& pitch_mix, const json& pitcher_stats, const json& batter_stats) {
+const std::string select_pitch(std::string balls, std::string strikes, const json& pitch_mix, const json& pitcher_stats, const json& batter_stats) {
     json probability_table;
 
     // Tuning parameters below. If pitcher_tuner > batter_tuner, pitch selection will favor the pitcher's numbers & vice versa
@@ -31,14 +28,14 @@ const json select_pitch(std::string balls, std::string strikes, const json& pitc
         }
         // Case 2: pitcher has thrown pitch in count but batter has never seen pitch in count
         if (pitcher_count_stats.contains(pitch) && !batter_count_stats.contains(pitch)) {
-            double pitcher_pitch_probability = std::stod(pitcher_count_stats[pitch].get<std::string>());
+            double pitcher_pitch_probability = pitcher_count_stats.at(pitch).get<double>();
             probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner);
             std::cout << pitch << " probability is defined by Case 2." << std::endl;
             continue;
         }
         // Case 3: batter has seen pitch in count but pitcher has never thrown pitch in count
         if (!pitcher_count_stats.contains(pitch) && batter_count_stats.contains(pitch)){
-            double batter_pitch_probability = std::stod(batter_count_stats[pitch].get<std::string>());
+            double batter_pitch_probability = batter_count_stats.at(pitch).get<double>();
             double pitcher_pitch_probability = 0.1 * batter_pitch_probability;
             probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
             std::cout << pitch << " probability is defined by Case 3." << std::endl;
@@ -46,8 +43,8 @@ const json select_pitch(std::string balls, std::string strikes, const json& pitc
         }
         //Case 4: pitcher has thrown pitch in count and batter has seen pitch in count
         if (pitcher_count_stats.contains(pitch) && batter_count_stats.contains(pitch)) {
-            double pitcher_pitch_probability = std::stod(pitcher_count_stats[pitch].get<std::string>());
-            double batter_pitch_probability = std::stod(batter_count_stats[pitch].get<std::string>());
+            double pitcher_pitch_probability = pitcher_count_stats.at(pitch).get<double>();
+            double batter_pitch_probability = batter_count_stats.at(pitch).get<double>();
             probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
             std::cout << pitch << " probability is defined by Case 4." << std::endl;
             continue;
@@ -75,5 +72,30 @@ const json select_pitch(std::string balls, std::string strikes, const json& pitc
 
     std::cout << "Pitch probability table: " << probability_table << std::endl;
 
-    return probability_table;
+    std::string pitch_selection = choose_pitch_from_table(probability_table);
+
+    return pitch_selection;
+}
+
+std::string choose_pitch_from_table(const json& probability_table) {
+    // Use a random device + generator
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<> dist(0.0, 1.0);
+
+    double r = dist(gen);  // random in [0,1)
+    double cumulative = 0.0;
+
+    for (auto& [pitch, prob_json] : probability_table.items()) {
+        double prob = prob_json.get<double>();
+        cumulative += prob;
+        if (r <= cumulative) {
+            std::cout << pitch << " selected from list from generated probability " << r << std::endl;
+            return pitch;
+        }
+    }
+
+    // Edge case: floating-point precision → return last pitch
+    std::cout << probability_table.begin().key() << " selected from list from generated probability " << r << std::endl;
+    return probability_table.begin().key();
 }

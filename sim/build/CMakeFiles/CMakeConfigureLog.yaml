@@ -79,7 +79,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.18+a338add32 for .NET Framework
-      Build started 8/21/2025 1:43:57 PM.
+      Build started 8/22/2025 1:32:54 PM.
       
       Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -108,7 +108,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.54
+      Time Elapsed 00:00:00.62
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -752,7 +752,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.18+a338add32 for .NET Framework
-      Build started 8/21/2025 1:43:57 PM.
+      Build started 8/22/2025 1:32:55 PM.
       
       Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -1021,8 +1021,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-9kdkp8"
-      binary: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-9kdkp8"
+      source: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-zzwc1a"
+      binary: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-zzwc1a"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -1031,34 +1031,34 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-9kdkp8'
+        Change Dir: 'C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-zzwc1a'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_96bfc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_df225.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/21/2025 1:43:58 PM.
+        Build started 8/22/2025 1:32:56 PM.
         
-        Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9kdkp8\\cmTC_96bfc.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zzwc1a\\cmTC_df225.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_96bfc.dir\\Debug\\".
+          Creating directory "cmTC_df225.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9kdkp8\\Debug\\".
-          Creating directory "cmTC_96bfc.dir\\Debug\\cmTC_96bfc.tlog\\".
+          Creating directory "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zzwc1a\\Debug\\".
+          Creating directory "cmTC_df225.dir\\Debug\\cmTC_df225.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_96bfc.dir\\Debug\\cmTC_96bfc.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_96bfc.dir\\Debug\\cmTC_96bfc.tlog\\unsuccessfulbuild".
+          Creating "cmTC_df225.dir\\Debug\\cmTC_df225.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_df225.dir\\Debug\\cmTC_df225.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_96bfc.dir\\Debug\\\\" /Fd"cmTC_96bfc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_df225.dir\\Debug\\\\" /Fd"cmTC_df225.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35214 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_96bfc.dir\\Debug\\\\" /Fd"cmTC_96bfc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_df225.dir\\Debug\\\\" /Fd"cmTC_df225.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9kdkp8\\Debug\\cmTC_96bfc.exe" /INCREMENTAL /ILK:"cmTC_96bfc.dir\\Debug\\cmTC_96bfc.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-9kdkp8/Debug/cmTC_96bfc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-9kdkp8/Debug/cmTC_96bfc.lib" /MACHINE:X64  /machine:x64 cmTC_96bfc.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_96bfc.vcxproj -> C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9kdkp8\\Debug\\cmTC_96bfc.exe
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zzwc1a\\Debug\\cmTC_df225.exe" /INCREMENTAL /ILK:"cmTC_df225.dir\\Debug\\cmTC_df225.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-zzwc1a/Debug/cmTC_df225.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-zzwc1a/Debug/cmTC_df225.lib" /MACHINE:X64  /machine:x64 cmTC_df225.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_df225.vcxproj -> C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zzwc1a\\Debug\\cmTC_df225.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_96bfc.dir\\Debug\\cmTC_96bfc.tlog\\unsuccessfulbuild".
-          Touching "cmTC_96bfc.dir\\Debug\\cmTC_96bfc.tlog\\cmTC_96bfc.lastbuildstate".
-        Done Building Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9kdkp8\\cmTC_96bfc.vcxproj" (default targets).
+          Deleting file "cmTC_df225.dir\\Debug\\cmTC_df225.tlog\\unsuccessfulbuild".
+          Touching "cmTC_df225.dir\\Debug\\cmTC_df225.tlog\\cmTC_df225.lastbuildstate".
+        Done Building Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zzwc1a\\cmTC_df225.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
@@ -1104,8 +1104,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-87kvp1"
-      binary: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-87kvp1"
+      source: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-kfxie8"
+      binary: "C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-kfxie8"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -1115,40 +1115,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-87kvp1'
+        Change Dir: 'C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-kfxie8'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_621fc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_43f8c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/21/2025 1:43:59 PM.
+        Build started 8/22/2025 1:32:57 PM.
         
-        Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-87kvp1\\cmTC_621fc.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kfxie8\\cmTC_43f8c.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_621fc.dir\\Debug\\".
+          Creating directory "cmTC_43f8c.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-87kvp1\\Debug\\".
-          Creating directory "cmTC_621fc.dir\\Debug\\cmTC_621fc.tlog\\".
+          Creating directory "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kfxie8\\Debug\\".
+          Creating directory "cmTC_43f8c.dir\\Debug\\cmTC_43f8c.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_621fc.dir\\Debug\\cmTC_621fc.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_621fc.dir\\Debug\\cmTC_621fc.tlog\\unsuccessfulbuild".
+          Creating "cmTC_43f8c.dir\\Debug\\cmTC_43f8c.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_43f8c.dir\\Debug\\cmTC_43f8c.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_621fc.dir\\Debug\\\\" /Fd"cmTC_621fc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_43f8c.dir\\Debug\\\\" /Fd"cmTC_43f8c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35214 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_621fc.dir\\Debug\\\\" /Fd"cmTC_621fc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_43f8c.dir\\Debug\\\\" /Fd"cmTC_43f8c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-87kvp1\\Debug\\cmTC_621fc.exe" /INCREMENTAL /ILK:"cmTC_621fc.dir\\Debug\\cmTC_621fc.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-87kvp1/Debug/cmTC_621fc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-87kvp1/Debug/cmTC_621fc.lib" /MACHINE:X64  /machine:x64 cmTC_621fc.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_621fc.vcxproj -> C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-87kvp1\\Debug\\cmTC_621fc.exe
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kfxie8\\Debug\\cmTC_43f8c.exe" /INCREMENTAL /ILK:"cmTC_43f8c.dir\\Debug\\cmTC_43f8c.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-kfxie8/Debug/cmTC_43f8c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/abovee/Documents/Python Projects/BB Model/sim/build/CMakeFiles/CMakeScratch/TryCompile-kfxie8/Debug/cmTC_43f8c.lib" /MACHINE:X64  /machine:x64 cmTC_43f8c.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_43f8c.vcxproj -> C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kfxie8\\Debug\\cmTC_43f8c.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_621fc.dir\\Debug\\cmTC_621fc.tlog\\unsuccessfulbuild".
-          Touching "cmTC_621fc.dir\\Debug\\cmTC_621fc.tlog\\cmTC_621fc.lastbuildstate".
-        Done Building Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-87kvp1\\cmTC_621fc.vcxproj" (default targets).
+          Deleting file "cmTC_43f8c.dir\\Debug\\cmTC_43f8c.tlog\\unsuccessfulbuild".
+          Touching "cmTC_43f8c.dir\\Debug\\cmTC_43f8c.tlog\\cmTC_43f8c.lastbuildstate".
+        Done Building Project "C:\\Users\\abovee\\Documents\\Python Projects\\BB Model\\sim\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kfxie8\\cmTC_43f8c.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.54
+        Time Elapsed 00:00:00.55
         
       exitCode: 0
   -

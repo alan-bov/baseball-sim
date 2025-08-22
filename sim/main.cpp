@@ -68,7 +68,7 @@ int main() {
 
     int tries = 5;
     
-    while (!pitcher_found || !batter_found || tries == 0) {
+    while (!pitcher_found || !batter_found) {
         if (!pitcher_found) {
             std::cout << "Pitcher not found, adding to database..." << std::endl;
             get_pitcher(pitcher.get_first_name(), pitcher.get_last_name(), pitcher.get_year());
@@ -84,15 +84,36 @@ int main() {
         }
 
         tries -= 1;
+        if (tries < 1) {
+            if (!pitcher_found) {
+                std::cerr << "Pitcher not found: " << pitcher.get_first_name() << " " << pitcher.get_last_name() << " - " << pitcher.get_year() << std::endl;
+                std::cerr << "Aborting program..." << std::endl;
+                return 0;
+            } else {
+                std::cerr << "Batter not found: " << batter.get_first_name() << " " << batter.get_last_name() << " - " << batter.get_year() << std::endl;
+                std::cerr << "Aborting program..." << std::endl;
+                return 0;
+            }
+        }
     }
 
     std::cout << "Pitcher found: " << pitcher.get_first_name() << " " << pitcher.get_last_name() << ", ID = " << pitcher.get_id() << ", Hand = " << pitcher.get_hand() << std::endl;
-    std::cout << "   - Pitch Mix In " << pitcher.get_year() << ": " << pitcher.get_pitch_mix() << std::endl;
-    std::cout << "   - Usage Vs. Lefty In " << balls << "-" << strikes << " Count: " << pitcher.get_usage_vs_lefty()[balls][strikes] << std::endl;
-
     std::cout << "Batter found: " << batter.get_first_name() << " " << batter.get_last_name() << ", ID = " << batter.get_id() << ", Hand = " << batter.get_hand() << std::endl;
-    std::cout << "   - Pitch Percentage Seen Vs. Lefty In " << balls << "-" << strikes << " Count: " << batter.get_pitches_seen_lefty()[balls][strikes] << std::endl;
 
-    json probability_table = select_pitch(balls, strikes, pitcher.get_pitch_mix(), pitcher.get_usage_vs_lefty(), batter.get_pitches_seen_lefty());
+    json pitcher_stats;
+    json batter_stats;
+    if (pitcher.get_hand() == "Left") {
+        batter_stats = batter.get_pitches_seen_lefty();
+    } else {
+        batter_stats = batter.get_pitches_seen_righty();
+    }
+    if (batter.get_hand() == "Left") {
+        pitcher_stats = pitcher.get_usage_vs_lefty();
+    } else {
+        pitcher_stats = pitcher.get_usage_vs_righty();
+    }
+
+    json probability_table = select_pitch(balls, strikes, pitcher.get_pitch_mix(), pitcher_stats, batter_stats);
+    std::string pitch_type = choose_pitch_from_table(probability_table);
     return 0;
 }

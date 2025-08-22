@@ -6,7 +6,7 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-std::string get_arm_matchup();
-const json select_pitch(std::string balls, std::string strikes, const json& pitch_mix, const json& pitcher_stats, const json& batter_stats);
+const std::string select_pitch(std::string balls, std::string strikes, const json& pitch_mix, const json& pitcher_stats, const json& batter_stats);
+std::string choose_pitch_from_table(const json& probability_table);
 
 #endif

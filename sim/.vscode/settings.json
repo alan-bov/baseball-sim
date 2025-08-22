@@ -70,7 +70,8 @@
         "unordered_map": "cpp",
         "valarray": "cpp",
         "xhash": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "random": "cpp"
     },
     "cmake.ignoreCMakeListsMissing": true
 }
