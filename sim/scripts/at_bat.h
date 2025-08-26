@@ -19,7 +19,7 @@ class At_Bat {
         int get_strikes() const;
         void increment_balls();
         void increment_strikes();
-        void sim_pitch(json& pitcher_stats, json& batter_stats);
+        std::string At_Bat::sim_pitch(json& pitcher_stats, json& batter_stats);
         std::string sim_at_bat();
         std::string generate_outcome();
 };

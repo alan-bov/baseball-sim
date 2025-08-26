@@ -360,6 +360,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\sqlite3.c" />
     <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\get_data.cpp" />
     <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\pitch_select.cpp" />
+    <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\at_bat.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -13,6 +13,9 @@
     <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\pitch_select.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\scripts\at_bat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\abovee\Documents\Python Projects\BB Model\sim\CMakeLists.txt" />

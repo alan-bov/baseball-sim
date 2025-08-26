@@ -29,7 +29,9 @@ def test_read_pitchers_db(name, year_input):
         usage_vs_righty = json.loads(usage_vs_righty_json)
         usage_vs_lefty = json.loads(usage_vs_lefty_json)
 
-        print(f"  Pitch Mix: {pitch_mix}")
+        print("  Pitch Mix (Speeds):")
+        for pitch, speeds in pitch_mix.items():
+            print(f"    {pitch}: min {speeds['min']}, max {speeds['max']}, avg {speeds['mean']}")
         print(f"  Count Usage vs. Righty: {usage_vs_righty}")
         print(f"  Count Usage vs. Lefty: {usage_vs_lefty}")
         print("-" * 80)
@@ -80,7 +82,7 @@ def test_read_batters_db(name, year_input):
     conn.close()
 
 if __name__ == "__main__":
-    player = "Riley Greene"
+    player = "Tarik Skubal"
     year = "2024"
-    #test_read_pitchers_db(player, year)
-    test_read_batters_db(player, year)
+    test_read_pitchers_db(player, year)
+    #test_read_batters_db(player, year)

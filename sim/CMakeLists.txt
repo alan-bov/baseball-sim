@@ -12,6 +12,7 @@ add_executable(sim
     scripts/sqlite3.c
     scripts/get_data.cpp
     scripts/pitch_select.cpp
+    scripts/at_bat.cpp
 )
 
 target_include_directories(sim PRIVATE ${CMAKE_SOURCE_DIR}/scripts)

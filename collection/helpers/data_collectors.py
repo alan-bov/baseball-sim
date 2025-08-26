@@ -11,7 +11,7 @@ class Pitcher:
         self.full_name = self.first_name + ' ' + self.last_name
 
         # Data
-        self.pitch_mix = []
+        self.pitch_mix = {}
         self.usage_vs_righty = defaultdict(lambda: defaultdict(dict))
         self.usage_vs_lefty = defaultdict(lambda: defaultdict(dict))
 
@@ -22,11 +22,17 @@ class Pitcher:
     def define_id(self, player_id):
         self.player_id = player_id
     
-    def add_pitch(self, pitch_type):
-        self.pitch_mix.append(pitch_type)
+    def add_pitch(self, pitch_type, speed_info):
+        # speed_info is dict with min/max/mean
+        self.pitch_mix[pitch_type] = {k: round(v, 1) for k, v in speed_info.items()}
     
     def show_pitch_mix(self):
-        print(f"Pitch mix for {self.full_name} [{self.player_id}]: {self.pitch_mix}")
+        print(f"Pitch mix for {self.full_name} [{self.player_id}]:")
+        for pitch, speeds in self.pitch_mix.items():
+            print(f"  {pitch}: "
+                f"min {speeds['min']}, "
+                f"max {speeds['max']}, "
+                f"avg {speeds['mean']}")
 
     def show_total_count_usage(self, hand):
         if hand == 'Right':
@@ -122,15 +128,16 @@ def pitcher_lookup(pitcher):
         else:
             pitcher.hand = "Unknown"
 
+        # Get pitch speeds and build pitch_mix
+        if not data.empty:
+            speed_ranges = data.groupby('pitch_type')['release_speed'].agg(['min', 'max', 'mean']).to_dict(orient='index')
+            for pitch_type, speeds in speed_ranges.items():
+                pitcher.add_pitch(pitch_type, speeds)
+
         # Filter by batter handedness
         data_against_righty = data[data['stand'] == 'R']
         data_against_lefty = data[data['stand'] == 'L']
 
-        # Build pitch mix
-        pitch_types = data['pitch_type'].value_counts()
-        for pitch_type, count in pitch_types.items():
-            pitcher.add_pitch(pitch_type)
-        
         # Filter usage by count, top for righty, bottom for lefty
         for balls in range(4):
             for strikes in range(3):
@@ -157,8 +164,6 @@ def pitcher_lookup(pitcher):
                 if total > 0:
                     pitch_percents = (pitch_counts / total).round(3).to_dict()
                     pitcher.usage_vs_lefty[balls][strikes] = pitch_percents
-
-        # Parse other important data
 
         return pitcher
     except Exception as e:

@@ -4,6 +4,7 @@
 #include <random>
 #include <nlohmann/json.hpp>
 #include "pitch_select.h"
+#include "get_data.h"
 
 using json = nlohmann::json;
 
@@ -19,37 +20,33 @@ const std::string select_pitch(std::string balls, std::string strikes, const jso
     json batter_count_stats = batter_stats[balls][strikes];
 
     // Create probability table for pitch
-    for (const auto& pitch:pitch_mix) {
+    for (auto& [pitch_name, pitch_info] : pitch_mix.items()) {
         // Case 1: pitcher has never thrown pitch in count and batter has never seen pitch in count
-        if (!pitcher_count_stats.contains(pitch) && !batter_count_stats.contains(pitch)) {
-            probability_table[pitch] = 0;
-            std::cout << pitch << " probability is defined by Case 1." << std::endl;
+        if (!pitcher_count_stats.contains(pitch_name) && !batter_count_stats.contains(pitch_name)) {
+            probability_table[pitch_name] = 0;
             continue;
         }
         // Case 2: pitcher has thrown pitch in count but batter has never seen pitch in count
-        if (pitcher_count_stats.contains(pitch) && !batter_count_stats.contains(pitch)) {
-            double pitcher_pitch_probability = pitcher_count_stats.at(pitch).get<double>();
-            probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner);
-            std::cout << pitch << " probability is defined by Case 2." << std::endl;
+        if (pitcher_count_stats.contains(pitch_name) && !batter_count_stats.contains(pitch_name)) {
+            double pitcher_pitch_probability = pitcher_count_stats.at(pitch_name).get<double>();
+            probability_table[pitch_name] = pow(pitcher_pitch_probability, pitcher_tuner);
             continue;
         }
         // Case 3: batter has seen pitch in count but pitcher has never thrown pitch in count
-        if (!pitcher_count_stats.contains(pitch) && batter_count_stats.contains(pitch)){
-            double batter_pitch_probability = batter_count_stats.at(pitch).get<double>();
+        if (!pitcher_count_stats.contains(pitch_name) && batter_count_stats.contains(pitch_name)){
+            double batter_pitch_probability = batter_count_stats.at(pitch_name).get<double>();
             double pitcher_pitch_probability = 0.1 * batter_pitch_probability;
-            probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
-            std::cout << pitch << " probability is defined by Case 3." << std::endl;
+            probability_table[pitch_name] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
             continue;
         }
         //Case 4: pitcher has thrown pitch in count and batter has seen pitch in count
-        if (pitcher_count_stats.contains(pitch) && batter_count_stats.contains(pitch)) {
-            double pitcher_pitch_probability = pitcher_count_stats.at(pitch).get<double>();
-            double batter_pitch_probability = batter_count_stats.at(pitch).get<double>();
-            probability_table[pitch] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
-            std::cout << pitch << " probability is defined by Case 4." << std::endl;
+        if (pitcher_count_stats.contains(pitch_name) && batter_count_stats.contains(pitch_name)) {
+            double pitcher_pitch_probability = pitcher_count_stats.at(pitch_name).get<double>();
+            double batter_pitch_probability = batter_count_stats.at(pitch_name).get<double>();
+            probability_table[pitch_name] = pow(pitcher_pitch_probability, pitcher_tuner) * pow(1-batter_pitch_probability, batter_tuner);
             continue;
         }
-        std::cerr << "ERROR: No case found for " << pitch << " in " << balls << "-" << strikes << " count!" << std::endl;
+        std::cerr << "ERROR: No case found for " << pitch_name << " in " << balls << "-" << strikes << " count!" << std::endl;
     }
 
     // Normalize probabilities to sum to 1
@@ -65,12 +62,10 @@ const std::string select_pitch(std::string balls, std::string strikes, const jso
     } else {
         // fallback: if all probabilities are 0, assign uniform distribution
         double uniform = 1.0 / pitch_mix.size();
-        for (const auto& pitch : pitch_mix) {
-            probability_table[pitch] = uniform;
+        for (auto& [pitch_name, _] : pitch_mix.items()) {
+            probability_table[pitch_name] = uniform;
         }
     }
-
-    std::cout << "Pitch probability table: " << probability_table << std::endl;
 
     std::string pitch_selection = choose_pitch_from_table(probability_table);
 
@@ -90,7 +85,6 @@ std::string choose_pitch_from_table(const json& probability_table) {
         double prob = prob_json.get<double>();
         cumulative += prob;
         if (r <= cumulative) {
-            std::cout << pitch << " selected from list from generated probability " << r << std::endl;
             return pitch;
         }
     }
@@ -98,4 +92,36 @@ std::string choose_pitch_from_table(const json& probability_table) {
     // Edge case: floating-point precision → return last pitch
     std::cout << probability_table.begin().key() << " selected from list from generated probability " << r << std::endl;
     return probability_table.begin().key();
+}
+
+double get_pitch_speed(const std::string& pitch_type, const Pitcher& pitcher) {
+    const json& pitch_mix = pitcher.get_pitch_mix();
+
+    if (!pitch_mix.contains(pitch_type)) {
+        std::cerr << "Error: pitch type " << pitch_type << " not found in pitcher's pitch_mix!\n";
+        return 0.0;
+    }
+
+    const json& pitch_data = pitch_mix.at(pitch_type);
+    double mean = pitch_data.at("mean").get<double>();
+    double min_speed = pitch_data.at("min").get<double>();
+    double max_speed = pitch_data.at("max").get<double>();
+
+    // Estimate standard deviation
+    double stddev = (max_speed - min_speed) / 4.0;
+
+    // Random number generator
+    static thread_local std::mt19937 gen(std::random_device{}());
+    std::normal_distribution<> dist(mean, stddev);
+
+    // Sample speed with rejection if out of bounds
+    double speed = dist(gen);
+    while (speed < min_speed || speed > max_speed) {
+        speed = dist(gen);
+    }
+
+    // Round to 1 decimal place
+    speed = std::round(speed * 10.0) / 10.0;
+
+    return speed;
 }
